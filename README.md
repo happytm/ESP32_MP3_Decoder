@@ -14,6 +14,8 @@ This project is based on Sprite\_TM's awesome MP3 web radio project for the ESP8
 
 ## About this fork
 
+forked from https://github.com/MrBuddyCasino/ESP32_MP3_Decoder
+
 ### add I2C OLED display (SSD1306) by kodera2t
 
 see https://github.com/espressif/esp-idf/blob/master/components/freertos/Kconfig#L43
