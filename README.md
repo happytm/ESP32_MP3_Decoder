@@ -14,12 +14,26 @@ This project is based on Sprite\_TM's awesome MP3 web radio project for the ESP8
 
 ## About this fork
 
-* add OLED display
+### add I2C OLED display (SSD1306) by kodera2t
+
+see https://github.com/espressif/esp-idf/blob/master/components/freertos/Kconfig#L43
+
+
+I2C OLED is connected, as
+ESP pin   - I2C signal
+```
+----------------------
+GPIO14   - SCL
+GPIO13   - SDA
+```
+,which defined in app_main.c Please change as you wish...
+
+See https://github.com/kodera2t/ESP32_OLED_webradio
 
 ### note for this fork
 
-* unset configuration for FreeRTOS "Halt when an SMP-untested function is called". 
-see https://github.com/espressif/esp-idf/blob/master/components/freertos/Kconfig#L43
+* set configuration for "use SSD1306 OLED" in "Web Radio / Bluetooth Speaker"
+* unset configuration for "Halt when an SMP-untested function is called" in FreeRTOS. 
 
 ## Required Software
 
@@ -65,7 +79,7 @@ Connect your serial cable and run 'make flash'. To see serial console output run
 You can advance to the next track in the playlist using the "Boot" button that is present on most development boards (GPIO0).
 
 ## UI
-You can connect a <a href="https://www.adafruit.com/product/1312">NeoPixel</a> LED to pin 32. Its currently not doing much except blinking while wifi is connecting.
+~~You can connect a <a href="https://www.adafruit.com/product/1312">NeoPixel</a> LED to pin 32. Its currently not doing much except blinking while wifi is connecting.~~
 
 ## Bluetooth Speaker Mode
 
