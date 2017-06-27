@@ -12,6 +12,15 @@ Features:
 
 This project is based on Sprite\_TM's awesome MP3 web radio project for the ESP8266: https://github.com/espressif/ESP8266_MP3_DECODER
 
+## About this fork
+
+* add OLED display
+
+### note for this fork
+
+* unset configuration for FreeRTOS "Halt when an SMP-untested function is called". 
+see https://github.com/espressif/esp-idf/blob/master/components/freertos/Kconfig#L43
+
 ## Required Software
 
 Get the SDK:
