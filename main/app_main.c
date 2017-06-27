@@ -28,7 +28,9 @@
 #endif
 #include "playlist.h"
 
+#ifdef CONFIG_OLED_DISPLAY
 #include "oled.h"
+#endif
 
 #define WIFI_LIST_NUM   10
 
@@ -142,9 +144,9 @@ void app_main()
     bt_speaker_start(create_renderer_config());
 #else
     start_wifi();
+#ifdef CONFIG_OLED_DISPLAY
     oled_init();
-    // playlist_entry_t *curr_track = playlist_curr_track(radio_config->playlist);
-    // oled_test(0, (char*)curr_track->url);
+#endif
     start_web_radio();
 #endif
 
