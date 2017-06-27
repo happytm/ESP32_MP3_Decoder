@@ -28,6 +28,7 @@
 #endif
 #include "playlist.h"
 
+#include "oled.h"
 
 #define WIFI_LIST_NUM   10
 
@@ -101,13 +102,15 @@ static renderer_config_t *create_renderer_config()
     return renderer_config;
 }
 
+
+static web_radio_t *radio_config = NULL;
+
 static void start_web_radio()
 {
     // init web radio
-    web_radio_t *radio_config = calloc(1, sizeof(web_radio_t));
+    radio_config = calloc(1, sizeof(web_radio_t));
     radio_config->playlist = playlist_create();
     playlist_load_pls(radio_config->playlist);
-
 
     // init player config
     radio_config->player_config = calloc(1, sizeof(player_t));
@@ -139,6 +142,9 @@ void app_main()
     bt_speaker_start(create_renderer_config());
 #else
     start_wifi();
+    oled_init();
+    // playlist_entry_t *curr_track = playlist_curr_track(radio_config->playlist);
+    // oled_test(0, (char*)curr_track->url);
     start_web_radio();
 #endif
 

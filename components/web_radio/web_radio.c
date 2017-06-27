@@ -22,6 +22,7 @@
 #include "url_parser.h"
 #include "controls.h"
 #include "playlist.h"
+#include "oled.h"
 
 #define TAG "web_radio"
 
@@ -108,7 +109,7 @@ static void http_get_task(void *pvParameters)
     // blocks until end of stream
     playlist_entry_t *curr_track = playlist_curr_track(radio_conf->playlist);
     int result = http_client_get(curr_track->url, &callbacks,
-            radio_conf->player_config);
+                                 radio_conf->player_config);
 
     if (result != 0) {
         ESP_LOGE(TAG, "http_client_get error");
@@ -122,9 +123,13 @@ static void http_get_task(void *pvParameters)
 
 void web_radio_start(web_radio_t *config)
 {
+    ESP_LOGI(TAG, "web_radio_start");
+
     // start reader task
-    xTaskCreatePinnedToCore(&http_get_task, "http_get_task", 2560, config, 20,
-    NULL, 0);
+    xTaskCreatePinnedToCore(&http_get_task, "http_get_task", 2560, config, 20, NULL, 0);
+
+    playlist_entry_t *curr_track = playlist_curr_track(config->playlist);
+    oled_test(0, (char*)curr_track->url);
 }
 
 void web_radio_stop(web_radio_t *config)
@@ -168,7 +173,7 @@ void web_radio_gpio_handler_task(void *pvParams)
 
 
             while(config->player_config->decoder_status != STOPPED) {
-                vTaskDelay(20 / portTICK_PERIOD_MS);
+                vTaskDelay(100 / portTICK_PERIOD_MS);
             }
 
             web_radio_start(config);
