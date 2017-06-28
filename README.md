@@ -16,7 +16,22 @@ This project is based on Sprite\_TM's awesome MP3 web radio project for the ESP8
 
 forked from https://github.com/MrBuddyCasino/ESP32_MP3_Decoder
 
-### add I2C OLED display (SSD1306) by kodera2t
+### Playlist saved in NVS and web interface
+
+Now, playlists saved in NVS (non volatile storage) with web interface.
+You can select station. 
+And you can add (up to 10), change or remove URL of the internet radio station. 
+
+```
+GET /  - list stations
+GET /P - change to previous station
+GET /N - change to next station
+GET /0..9 - select station
+GET /0..9+URL - set station URL
+GET /0..-URL - remove station URL
+```
+
+### I2C OLED display (SSD1306) by kodera2t
 
 see https://github.com/espressif/esp-idf/blob/master/components/freertos/Kconfig#L43
 
