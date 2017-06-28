@@ -22,6 +22,7 @@
 #include "url_parser.h"
 #include "controls.h"
 #ifdef CONFIG_NVS_PLAYLIST
+#include "nvpls.h"
 #else
 #include "playlist.h"
 #endif
@@ -184,6 +185,7 @@ void web_radio_gpio_handler_task(void *pvParams)
             */
             web_radio_stop(config);
 #ifdef CONFIG_NVS_PLAYLIST
+	    config->url = nvpls_init(1);
 #else
             playlist_entry_t *track = playlist_next(config->playlist);
             ESP_LOGW(TAG, "next track: %s", track->name);
