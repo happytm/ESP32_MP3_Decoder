@@ -21,7 +21,10 @@
 #include "http.h"
 #include "url_parser.h"
 #include "controls.h"
+#ifdef CONFIG_NVS_PLAYLIST
+#else
 #include "playlist.h"
+#endif
 
 #ifdef CONFIG_OLED_DISPLAY
 #include "oled.h"
@@ -110,10 +113,14 @@ static void http_get_task(void *pvParameters)
     callbacks.on_message_complete = on_message_complete_cb;
 
     // blocks until end of stream
+#ifdef CONFIG_NVS_PLAYLIST
+    int result = http_client_get(radio_conf->url, &callbacks,
+                                 radio_conf->player_config);
+#else
     playlist_entry_t *curr_track = playlist_curr_track(radio_conf->playlist);
     int result = http_client_get(curr_track->url, &callbacks,
                                  radio_conf->player_config);
-
+#endif
     if (result != 0) {
         ESP_LOGE(TAG, "http_client_get error");
     } else {
@@ -130,10 +137,13 @@ void web_radio_start(web_radio_t *config)
 
     // start reader task
     xTaskCreatePinnedToCore(&http_get_task, "http_get_task", 2560, config, 20, NULL, 0);
-
+#ifdef CONFIG_NVS_PLAYLIST
+    oled_test(0, (char*)config->url);
+#else
     playlist_entry_t *curr_track = playlist_curr_track(config->playlist);
 #ifdef CONFIG_OLED_DISPLAY
     oled_test(0, (char*)curr_track->url);
+#endif
 #endif
 }
 
@@ -173,9 +183,11 @@ void web_radio_gpio_handler_task(void *pvParams)
             }
             */
             web_radio_stop(config);
+#ifdef CONFIG_NVS_PLAYLIST
+#else
             playlist_entry_t *track = playlist_next(config->playlist);
             ESP_LOGW(TAG, "next track: %s", track->name);
-
+#endif
 
             while(config->player_config->decoder_status != STOPPED) {
                 vTaskDelay(100 / portTICK_PERIOD_MS);

@@ -62,4 +62,7 @@ menu "Web Radio / Bluetooth Speaker"
   config OLED_DISPLAY
      bool "use SSD1306 OLED"
 
+  config NVS_PLAYLIST
+     bool "use NVS for playlist with web interface."
+
 endmenu

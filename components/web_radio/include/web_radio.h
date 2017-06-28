@@ -17,7 +17,11 @@ typedef struct {
 
 typedef struct {
     player_t *player_config;
+#ifdef CONFIG_NVS_PLAYLIST
+    char *url;
+#else
     playlist_t *playlist;
+#endif
 } web_radio_t;
 
 void web_radio_init(web_radio_t *config);

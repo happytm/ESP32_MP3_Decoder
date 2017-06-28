@@ -26,7 +26,11 @@
 #ifdef CONFIG_BT_SPEAKER_MODE
 #include "bt_speaker.h"
 #endif
+#ifdef CONFIG_NVS_PLAYLIST
+#define TEST_URL "http://wbgo.streamguys.net/wbgo96"
+#else
 #include "playlist.h"
+#endif
 
 #ifdef CONFIG_OLED_DISPLAY
 #include "oled.h"
@@ -111,9 +115,13 @@ static void start_web_radio()
 {
     // init web radio
     radio_config = calloc(1, sizeof(web_radio_t));
+#ifdef CONFIG_NVS_PLAYLIST
+	radio_config->url = TEST_URL; // URL
+#else
     radio_config->playlist = playlist_create();
     playlist_load_pls(radio_config->playlist);
-
+#endif
+	
     // init player config
     radio_config->player_config = calloc(1, sizeof(player_t));
     radio_config->player_config->command = CMD_NONE;
