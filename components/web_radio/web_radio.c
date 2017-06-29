@@ -138,11 +138,11 @@ void web_radio_start(web_radio_t *config)
 
     // start reader task
     xTaskCreatePinnedToCore(&http_get_task, "http_get_task", 2560, config, 20, NULL, 0);
+#ifdef CONFIG_OLED_DISPLAY
 #ifdef CONFIG_NVS_PLAYLIST
     oled_test(0, (char*)config->url);
 #else
     playlist_entry_t *curr_track = playlist_curr_track(config->playlist);
-#ifdef CONFIG_OLED_DISPLAY
     oled_test(0, (char*)curr_track->url);
 #endif
 #endif

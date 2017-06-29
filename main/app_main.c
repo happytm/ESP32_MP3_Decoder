@@ -95,6 +95,9 @@ static void start_wifi()
     ui_queue_event(UI_CONNECTED);
 }
 
+
+#ifdef CONFIG_NVS_PLAYLIST
+
 /*
  * web interface
  */
@@ -227,6 +230,8 @@ static void http_server(void *pvParameters)
    netconn_close(conn);
    netconn_delete(conn);
 }
+
+#endif /* CONFIG_NVS_PLAYLIST */
 
 /* */
 

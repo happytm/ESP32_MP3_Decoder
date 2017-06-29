@@ -64,5 +64,6 @@ menu "Web Radio / Bluetooth Speaker"
 
   config NVS_PLAYLIST
      bool "use NVS for playlist with web interface."
+	 depends on !BT_SPEAKER_MODE
 
 endmenu

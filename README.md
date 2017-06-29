@@ -14,7 +14,7 @@ This project is based on Sprite\_TM's awesome MP3 web radio project for the ESP8
 
 ## About this fork
 
-forked from https://github.com/MrBuddyCasino/ESP32_MP3_Decoder
+forked from https://github.com/MrBuddyCasino/ESP32_MP3_Decoder.
 
 ### Playlist saved in NVS and web interface
 
@@ -48,10 +48,17 @@ See https://github.com/kodera2t/ESP32_OLED_webradio
 
 instead of GPIO0 ('boot' botton).
 
-### note for this fork
+### Note
 
-* set configuration for "use SSD1306 OLED" in "Web Radio / Bluetooth Speaker"
+* select configuration for "use SSD1306 OLED"  and "use NVS for playlist with web interface" in "Web Radio / Bluetooth Speaker"
+
 * unset configuration for "Halt when an SMP-untested function is called" in FreeRTOS. See https://github.com/espressif/esp-idf/blob/master/components/freertos/Kconfig#L43
+
+It's fit for these boards.
+
+* [ESP32 Audio developing board (ESP32-ADB)](https://www.tindie.com/products/microwavemont/esp32-audio-developing-board-esp32-adb/)
+* [ESP32 web radio /audio BT receiver /w class-D amp](https://www.tindie.com/products/microwavemont/esp32-web-radio-audio-bt-receiver-w-class-d-amp/)
+
 
 ## Required Software
 

@@ -53,7 +53,7 @@ void oled_test(int mode, char *url)
   SSD1306_GotoXY(2, 30);
   SSD1306_Puts("my device name is", &Font_7x10, SSD1306_COLOR_WHITE);
   SSD1306_GotoXY(2, 39);
-  SSD1306_Puts(dev_name, &Font_7x10, SSD1306_COLOR_WHITE);
+  SSD1306_Puts(CONFIG_BT_NAME, &Font_7x10, SSD1306_COLOR_WHITE);
   SSD1306_GotoXY(16, 53);
   SSD1306_Puts("Yeah! Speaker!", &Font_7x10, SSD1306_COLOR_WHITE);
 #else ////////for webradio mode display////////////////
