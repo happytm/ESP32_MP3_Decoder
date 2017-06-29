@@ -33,9 +33,6 @@ GET /0..-URL - remove station URL
 
 ### I2C OLED display (SSD1306) by kodera2t
 
-see https://github.com/espressif/esp-idf/blob/master/components/freertos/Kconfig#L43
-
-
 I2C OLED is connected, as
 ESP pin   - I2C signal
 ```
@@ -54,7 +51,7 @@ instead of GPIO0 ('boot' botton).
 ### note for this fork
 
 * set configuration for "use SSD1306 OLED" in "Web Radio / Bluetooth Speaker"
-* unset configuration for "Halt when an SMP-untested function is called" in FreeRTOS. 
+* unset configuration for "Halt when an SMP-untested function is called" in FreeRTOS. See https://github.com/espressif/esp-idf/blob/master/components/freertos/Kconfig#L43
 
 ## Required Software
 
