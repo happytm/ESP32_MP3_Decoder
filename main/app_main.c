@@ -298,13 +298,16 @@ void app_main()
 
     init_hardware();
 
-#ifdef CONFIG_BT_SPEAKER_MODE
-    bt_speaker_start(create_renderer_config());
-#else
-    start_wifi();
 #ifdef CONFIG_OLED_DISPLAY
     oled_init();
 #endif
+#ifdef CONFIG_BT_SPEAKER_MODE
+#ifdef CONFIG_OLED_DISPLAY
+    oled_test(0, "");
+#endif
+    bt_speaker_start(create_renderer_config());
+#else
+    start_wifi();
     start_web_radio();
 #endif
 
