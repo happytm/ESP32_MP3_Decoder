@@ -12,6 +12,54 @@ Features:
 
 This project is based on Sprite\_TM's awesome MP3 web radio project for the ESP8266: https://github.com/espressif/ESP8266_MP3_DECODER
 
+## About this fork
+
+forked from https://github.com/MrBuddyCasino/ESP32_MP3_Decoder.
+
+### Playlist saved in NVS and web interface
+
+Now, playlists saved in NVS (non volatile storage) with web interface.
+You can select station. 
+And you can add (up to 10), change or remove URL of the internet radio station. 
+
+```
+GET /  - list stations
+GET /P - change to previous station
+GET /N - change to next station
+GET /0..9 - select station
+GET /0..9+URL - set station URL
+GET /0..-URL - remove station URL
+```
+
+### I2C OLED display (SSD1306) by kodera2t
+
+I2C OLED is connected, as
+ESP pin   - I2C signal
+```
+----------------------
+GPIO14   - SCL
+GPIO13   - SDA
+```
+,which defined in app_main.c Please change as you wish...
+
+See https://github.com/kodera2t/ESP32_OLED_webradio
+
+### GPIO16 to select next station
+
+instead of GPIO0 ('boot' botton).
+
+### Note
+
+* select configuration for "use SSD1306 OLED"  and "use NVS for playlist with web interface" in "Web Radio / Bluetooth Speaker"
+
+* unset configuration for "Halt when an SMP-untested function is called" in FreeRTOS. See https://github.com/espressif/esp-idf/blob/master/components/freertos/Kconfig#L43
+
+It's fit for these boards.
+
+* [ESP32 Audio developing board (ESP32-ADB)](https://www.tindie.com/products/microwavemont/esp32-audio-developing-board-esp32-adb/)
+* [ESP32 web radio /audio BT receiver /w class-D amp](https://www.tindie.com/products/microwavemont/esp32-web-radio-audio-bt-receiver-w-class-d-amp/)
+
+
 ## Required Software
 
 Get the SDK:
@@ -56,7 +104,7 @@ Connect your serial cable and run 'make flash'. To see serial console output run
 You can advance to the next track in the playlist using the "Boot" button that is present on most development boards (GPIO0).
 
 ## UI
-You can connect a <a href="https://www.adafruit.com/product/1312">NeoPixel</a> LED to pin 32. Its currently not doing much except blinking while wifi is connecting.
+~~You can connect a <a href="https://www.adafruit.com/product/1312">NeoPixel</a> LED to pin 32. Its currently not doing much except blinking while wifi is connecting.~~
 
 ## Bluetooth Speaker Mode
 
