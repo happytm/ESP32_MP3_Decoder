@@ -38,17 +38,41 @@ void oled_init(void)
   SSD1306_Init();
 }
 
+static char *surl = NULL;
+static int x = 0;
+static int l = 0;
+
+void oled_scroll(void) {
+  if (surl == NULL) return;
+  while (l) {
+    vTaskDelay(20/portTICK_RATE_MS);
+  }
+  int w = strlen(surl) * 7;
+  if (w <= 128) return;
+
+  SSD1306_GotoXY(2 - x, 37);
+  SSD1306_Puts(surl, &Font_7x10, SSD1306_COLOR_WHITE);
+  SSD1306_UpdateScreen();
+
+  x++;
+  if (x > w) x = -125;
+}
+
 void oled_test(int mode, char *url)
 {
   ESP_LOGI(TAG, "oled_test(mode=%d,url='%s')", mode, url);
+  l = 1;
+
+  x = 0;
+  surl = url;
 
   SSD1306_Fill(SSD1306_COLOR_BLACK); // clear screen
 
   SSD1306_GotoXY(40, 4);
   SSD1306_Puts("ESP32", &Font_11x18, SSD1306_COLOR_WHITE);
     
-  SSD1306_GotoXY(2, 20);
 #ifdef CONFIG_BT_SPEAKER_MODE /////bluetooth speaker mode/////
+  SSD1306_GotoXY(2, 20);
   SSD1306_Puts("PCM5102 BT speaker", &Font_7x10, SSD1306_COLOR_WHITE);
   SSD1306_GotoXY(2, 30);
   SSD1306_Puts("my device name is", &Font_7x10, SSD1306_COLOR_WHITE);
@@ -57,17 +81,20 @@ void oled_test(int mode, char *url)
   SSD1306_GotoXY(16, 53);
   SSD1306_Puts("Yeah! Speaker!", &Font_7x10, SSD1306_COLOR_WHITE);
 #else ////////for webradio mode display////////////////
+  SSD1306_GotoXY(2, 24);
   SSD1306_Puts("PCM5102A webradio", &Font_7x10, SSD1306_COLOR_WHITE);
-  SSD1306_GotoXY(2, 30);
+  SSD1306_GotoXY(2, 37);
   if (mode) {
     SSD1306_Puts("web server is up.", &Font_7x10, SSD1306_COLOR_WHITE);
   } else {
-    SSD1306_Puts(url, &Font_7x10, SSD1306_COLOR_WHITE);
-    if (strlen(url) > 18)  {
+    SSD1306_Puts(surl, &Font_7x10, SSD1306_COLOR_WHITE);
+ #if 0
+    if (strlen(surl) > 18)  {
       SSD1306_GotoXY(2, 39);
       SSD1306_Puts(url + 18, &Font_7x10, SSD1306_COLOR_WHITE);
     }
     SSD1306_GotoXY(16, 53);
+ #endif
   }
 
   tcpip_adapter_ip_info_t ip_info;
@@ -80,6 +107,7 @@ void oled_test(int mode, char *url)
 
   /* Update screen, send changes to LCD */
   SSD1306_UpdateScreen();
+  l = 0;
 }
 
 // EOF
