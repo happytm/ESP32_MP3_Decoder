@@ -316,6 +316,8 @@ void app_main()
 
     while (1) {
       vTaskDelay(25/portTICK_RATE_MS);
+#ifdef CONFIG_OLED_DISPLAY
       oled_scroll();
+#endif
     }
 }
