@@ -263,7 +263,18 @@ static void start_web_radio()
 #ifdef CONFIG_NVS_PLAYLIST
     radio_config->url = nvpls_init(0); // URL
     xTaskCreate(&http_server, "http_server", 2048, NULL, 5, NULL);
+
+    gpio_config_t io_conf;
+    io_conf.intr_type = GPIO_PIN_INTR_POSEDGE;
+    io_conf.pin_bit_mask = GPIO_SEL_16;
+    io_conf.mode = GPIO_MODE_INPUT;
+    //disable pull-down mode
+    io_conf.pull_down_en = 0;
+    //enable pull-up mode
+    io_conf.pull_up_en = 1;
+    gpio_config(&io_conf);
     if (gpio_get_level(GPIO_NUM_16) == 0) {
+      // enter maintenance mode
       while (1) 
         vTaskDelay(200/portTICK_RATE_MS);
     }
@@ -313,4 +324,11 @@ void app_main()
 
     ESP_LOGI(TAG, "RAM left %d", esp_get_free_heap_size());
     // ESP_LOGI(TAG, "app_main stack: %d\n", uxTaskGetStackHighWaterMark(NULL));
+
+    while (1) {
+      vTaskDelay(25/portTICK_RATE_MS);
+#ifdef CONFIG_OLED_DISPLAY
+      oled_scroll();
+#endif
+    }
 }
