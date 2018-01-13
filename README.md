@@ -46,7 +46,8 @@ See https://github.com/kodera2t/ESP32_OLED_webradio
 
 ### GPIO16 to select next station
 
-instead of GPIO0 ('boot' botton).
+* instead of GPIO0 ('boot' botton).
+* If GPIO16 is low when reset, the web radio will not play. Only setting operation from the web is possible.
 
 ### Note
 
