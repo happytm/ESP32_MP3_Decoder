@@ -22,7 +22,6 @@
 #include "playerconfig.h"
 #include "wifi.h"
 #include "app_main.h"
-#include "mdns_task.h"
 #ifdef CONFIG_BT_SPEAKER_MODE
 #include "bt_speaker.h"
 #endif
