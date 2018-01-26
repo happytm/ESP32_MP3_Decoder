@@ -84,9 +84,6 @@ static void start_wifi()
     ui_queue_event(UI_CONNECTING);
     initialise_wifi(wifi_event_group);
 
-    /* start mDNS */
-    // xTaskCreatePinnedToCore(&mdns_task, "mdns_task", 2048, wifi_event_group, 5, NULL, 0);
-
     /* Wait for the callback to set the CONNECTED_BIT in the event group. */
     xEventGroupWaitBits(wifi_event_group, CONNECTED_BIT,
                         false, true, portMAX_DELAY);
